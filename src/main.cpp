@@ -13,11 +13,12 @@ int main() {
     cbreak();// Disable line buffering
     noecho(); // Prevent user input from being echoed to the screen
     keypad(stdscr, TRUE); // Capture special keys like arrow keys 
-    char input;
+    int input;
     std::vector<Entity *> entities;
     Player *player = new Player(10, Tile(1, 1, '0'));
     entities.push_back(player);
-    while (input != 'q') {
+
+    while (input != 'q' && input != 27) {
         clear();
         for(Entity *entity : entities) {
             entity->render();
@@ -42,9 +43,11 @@ int main() {
                 player->tile.pos.x += 1;
                 break;
             default:
+                Tile(4, 4, input).render();
                 break;
         }
     }
     endwin();             // End curses mode
+    delete player;
     return 0;
 }
