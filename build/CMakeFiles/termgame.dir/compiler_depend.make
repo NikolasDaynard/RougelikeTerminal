@@ -798,8 +798,11 @@ CMakeFiles/termgame.dir/src/main.cpp.o: /Users/nikolasdaynard/hackclub/1/src/mai
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/nikolasdaynard/hackclub/1/src/entities.hpp \
-  /Users/nikolasdaynard/hackclub/1/src/helpers.hpp
+  /Users/nikolasdaynard/hackclub/1/src/helpers.hpp \
+  /Users/nikolasdaynard/hackclub/1/src/player.cpp
 
+
+/Users/nikolasdaynard/hackclub/1/src/player.cpp:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__random/log2.h:
 

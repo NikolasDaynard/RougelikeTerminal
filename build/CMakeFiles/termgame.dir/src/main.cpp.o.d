@@ -796,4 +796,5 @@ CMakeFiles/termgame.dir/src/main.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cstdarg \
   /Users/nikolasdaynard/hackclub/1/src/helpers.hpp \
-  /Users/nikolasdaynard/hackclub/1/src/entities.hpp
+  /Users/nikolasdaynard/hackclub/1/src/entities.hpp \
+  /Users/nikolasdaynard/hackclub/1/src/player.cpp
