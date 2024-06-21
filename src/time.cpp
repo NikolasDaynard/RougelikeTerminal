@@ -17,26 +17,3 @@ public:
         startTime = std::chrono::system_clock::now();
     }
 };
-
-class Time {
-private:
-    std::map<std::string, Timer> timers;
-public:
-    std::string createTimer(std::string name) {
-        timers[name] = Timer();
-        return name;
-    }
-    /** returns current time in ms */
-    long long readTimer(std::string name) {
-        return timers[name].readTimer();
-    }
-    void resetTimer(std::string name) {
-        timers[name].resetTimer();
-    }
-    void deleteTimer(std::string name) {
-        auto it = timers.find(name);
-        if (it != timers.end()) {
-            timers.erase(it);
-        }
-    }
-};

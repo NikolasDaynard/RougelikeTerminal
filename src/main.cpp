@@ -19,8 +19,7 @@ int main() {
     keypad(stdscr, TRUE); // Capture special keys like arrow keys
     int input;
     std::vector<Entity *> entities;
-    Time time;
-    std::string playerMovementTimer = time.createTimer("playerMovementTimer");
+    Timer playerMovementTimer = Timer();
     Player *player = new Player(10, Tile(1, 1, '0'));
     
     for(Entity *entity : createLevel()) {
@@ -36,26 +35,32 @@ int main() {
         }
         refresh();            // Print it on the real screen
         input = getch();              // Wait for user input
-        switch (input) {
-            case KEY_UP:
-            case 'w':
-                player->tile.pos.y -= 1;
-                break;
-            case KEY_DOWN:
-            case 's':
-                player->tile.pos.y += 1;
-                break;
-            case KEY_LEFT:
-            case 'a':
-                player->tile.pos.x -= 1;
-                break;
-            case KEY_RIGHT:
-            case 'd':
-                player->tile.pos.x += 1;
-                break;
-            default:
-                Tile(4, 4, input).render();
-                break;
+        if(playerMovementTimer.readTimer() > 1000) {
+            switch (input) {
+                case KEY_UP:
+                case 'w':
+                    player->tile.pos.y -= 1;
+                    playerMovementTimer.resetTimer();
+                    break;
+                case KEY_DOWN:
+                case 's':
+                    player->tile.pos.y += 1;
+                    playerMovementTimer.resetTimer();
+                    break;
+                case KEY_LEFT:
+                case 'a':
+                    player->tile.pos.x -= 1;
+                    playerMovementTimer.resetTimer();
+                    break;
+                case KEY_RIGHT:
+                case 'd':
+                    player->tile.pos.x += 1;
+                    playerMovementTimer.resetTimer();
+                    break;
+                default:
+                    Tile(4, 4, input).render();
+                    break;
+            }
         }
     }
     endwin();             // End curses mode

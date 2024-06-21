@@ -798,4 +798,7 @@ CMakeFiles/termgame.dir/src/main.cpp.o: \
   /Users/nikolasdaynard/hackclub/1/src/helpers.hpp \
   /Users/nikolasdaynard/hackclub/1/src/entities.hpp \
   /Users/nikolasdaynard/hackclub/1/src/player.cpp \
-  /Users/nikolasdaynard/hackclub/1/src/level.cpp
+  /Users/nikolasdaynard/hackclub/1/src/level.cpp \
+  /Users/nikolasdaynard/hackclub/1/src/time.cpp \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/map \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__tree
