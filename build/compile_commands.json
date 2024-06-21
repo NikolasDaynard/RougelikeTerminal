@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/nikolasdaynard/hackclub/1/build",
+  "command": "/usr/bin/clang++ -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -o CMakeFiles/termgame.dir/src/main.cpp.o -c /Users/nikolasdaynard/hackclub/1/src/main.cpp",
+  "file": "/Users/nikolasdaynard/hackclub/1/src/main.cpp",
+  "output": "CMakeFiles/termgame.dir/src/main.cpp.o"
+}
+]

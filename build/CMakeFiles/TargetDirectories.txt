@@ -1,0 +1,3 @@
+/Users/nikolasdaynard/hackclub/1/build/CMakeFiles/termgame.dir
+/Users/nikolasdaynard/hackclub/1/build/CMakeFiles/edit_cache.dir
+/Users/nikolasdaynard/hackclub/1/build/CMakeFiles/rebuild_cache.dir
