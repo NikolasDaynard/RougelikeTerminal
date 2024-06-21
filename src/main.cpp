@@ -1,9 +1,11 @@
 #include <ncurses.h>
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include "helpers.hpp"
 #include "entities.hpp"
 #include "player.cpp"
+#include "level.cpp"
 
 int main() {
     srand(time(NULL));
@@ -12,10 +14,16 @@ int main() {
     start_color();
     cbreak();// Disable line buffering
     noecho(); // Prevent user input from being echoed to the screen
-    keypad(stdscr, TRUE); // Capture special keys like arrow keys 
+    nodelay(stdscr, TRUE); // causes input to be non-blocking
+    keypad(stdscr, TRUE); // Capture special keys like arrow keys
     int input;
     std::vector<Entity *> entities;
     Player *player = new Player(10, Tile(1, 1, '0'));
+    
+    for(Entity *entity : createLevel()) {
+        entities.push_back(entity);
+    }
+    // make sure player is ontop of the stack
     entities.push_back(player);
 
     while (input != 'q' && input != 27) {
