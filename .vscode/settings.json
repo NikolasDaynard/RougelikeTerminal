@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "__locale": "cpp",
+        "locale": "cpp",
+        "thread": "cpp",
+        "text_encoding": "cpp",
+        "typeinfo": "cpp",
+        "chrono": "cpp"
+    }
+}
