@@ -6,6 +6,7 @@
 #include "entities.hpp"
 #include "player.cpp"
 #include "level.cpp"
+#include "time.cpp"
 
 int main() {
     srand(time(NULL));
@@ -18,6 +19,8 @@ int main() {
     keypad(stdscr, TRUE); // Capture special keys like arrow keys
     int input;
     std::vector<Entity *> entities;
+    Time time;
+    std::string playerMovementTimer = time.createTimer("playerMovementTimer");
     Player *player = new Player(10, Tile(1, 1, '0'));
     
     for(Entity *entity : createLevel()) {

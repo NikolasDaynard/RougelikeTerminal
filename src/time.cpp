@@ -1,34 +1,42 @@
 #include <string>
 #include <chrono>
 #include <vector>
+#include <map>
 
 class Timer {
 private:
     std::chrono::time_point<std::chrono::system_clock> startTime = std::chrono::system_clock::now();
 public:
     /** returns current time in ms */
-    long long readTimer(std::string name) const {
+    long long readTimer() const {
         auto end_time = std::chrono::system_clock::now();
         auto duration = end_time - startTime;
         return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     }
-    void resetTimer(std::string name) {
+    void resetTimer() {
         startTime = std::chrono::system_clock::now();
     }
 };
 
 class Time {
 private:
-    std::vector<Timer> timers;
+    std::map<std::string, Timer> timers;
 public:
-    void createTimer(std::string name) {
-        timers.push_back(Timer());
+    std::string createTimer(std::string name) {
+        timers[name] = Timer();
+        return name;
     }
     /** returns current time in ms */
-    int readTimer(std::string name) {
-        
+    long long readTimer(std::string name) {
+        return timers[name].readTimer();
     }
     void resetTimer(std::string name) {
-
+        timers[name].resetTimer();
+    }
+    void deleteTimer(std::string name) {
+        auto it = timers.find(name);
+        if (it != timers.end()) {
+            timers.erase(it);
+        }
     }
 };
