@@ -72,6 +72,9 @@
         "type_traits": "cpp",
         "utility": "cpp",
         "format": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

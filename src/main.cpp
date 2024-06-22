@@ -17,14 +17,17 @@ int main() {
     noecho(); // Prevent user input from being echoed to the screen
     nodelay(stdscr, TRUE); // causes input to be non-blocking
     keypad(stdscr, TRUE); // Capture special keys like arrow keys
-    int input;
+    int input = 0;
+    int inputTemp;
+    
     std::vector<Entity *> entities;
     Timer playerMovementTimer = Timer();
+    Timer inputTimer = Timer();
     Player *player = new Player(10, Tile(1, 1, '0'));
     
-    for(Entity *entity : createLevel()) {
-        entities.push_back(entity);
-    }
+    // for(Entity *entity : createLevel()) {
+    //     entities.push_back(entity);
+    // }
     // make sure player is ontop of the stack
     entities.push_back(player);
 
@@ -34,8 +37,20 @@ int main() {
             entity->render();
         }
         refresh();            // Print it on the real screen
-        input = getch();              // Wait for user input
-        if(playerMovementTimer.readTimer() > 1000) {
+        
+        inputTemp = getch();
+        if(inputTemp != ERR) {  // only update input if it exists
+            input = inputTemp;
+            inputTimer.resetTimer();
+        }else{
+            // if enough time has elapsed, assume key was lifted
+            if(inputTimer.readTimer() > 70) {
+                input = inputTemp;
+                inputTimer.resetTimer();
+            }
+        }
+
+        if(playerMovementTimer.readTimer() > 100) {
             switch (input) {
                 case KEY_UP:
                 case 'w':
