@@ -23,7 +23,7 @@ std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int r
         rectw = abs(rectw);
     }
     if(recth < 0) {
-        recty -= recth; 
+        recty += recth; 
         recth = abs(recth);
     }
 
@@ -48,7 +48,7 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
     }
     if(recth < 0) {
         recty += recth; 
-        recty = abs(recth);
+        recth = abs(recth);
     }
 
 
@@ -144,11 +144,6 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     // }
     if(currentLevel == Point(0, 0)) { // starting level
         level = addRectangle(level, 20, 20, 5, 5);
-        // for(int x = 0; x < COLS; x++) {
-        //     for(int y = 0; y < LINES; y++) {
-        //         level.push_back(new Wall(Tile(x, y, ' ')));
-        //     }
-        // }
         for(int i = 0; i < 10; i++) {
             level = iterateLevel(level);
         }
