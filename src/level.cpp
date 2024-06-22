@@ -75,43 +75,6 @@ int findOpenDirection(std::vector<Entity *> level, int x, int y) {
         return NONE;
     }
 }
-int findOpenDirection(std::vector<Entity *> level, int x, int y) {
-    bool left = true;
-    bool right = true;
-    bool down = true;
-    bool up = true;
-    for(Entity *wall : level){
-        // handles right
-        // if((x + 1 == wall->tile.pos.x && y + 1 == wall->tile.pos.y) ||
-        //     (x + 1 == wall->tile.pos.x && y - 1 == wall->tile.pos.y) ||
-        //     x + 1 == wall->tile.pos.x && y == wall->tile.pos.y) {
-        //     right = false;
-        // }
-        if(!isRectFree(level, x + 1, y - 1, 3, 3)) {
-            right = false;
-        }
-        if(!isRectFree(level, x - 1, y - 1, -3, -3)) {
-            left = false;
-        }
-        if(!isRectFree(level, x - 1, y - 1, 3, -3)) {
-            up = false;
-        }
-        if(!isRectFree(level, x - 1, y + 1, 3, 3)) {
-            down = false;
-        }
-    }
-    if(right) {
-        return RIGHT;
-    }else if(left) {
-        return LEFT;
-    }else if(up) {
-        return UP;
-    }else if(down) {
-        return DOWN;
-    }else{
-        return NONE;
-    }
-}
 
 std::vector<Entity *> iterateLevel(std::vector<Entity *> level) {
     int walls = level.size();
