@@ -55,7 +55,6 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
         return false;
     }
 
-
     for(Entity *wall : level){
         if((wall->tile.pos.x == rectx && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // left bar
             (wall->tile.pos.x == rectx + rectw && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // right bar
@@ -69,21 +68,34 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
     return true;
 }
 
+bool isTileFree(std::vector<Entity *> level, int x, int y) {
+    for(Entity *wall : level){
+        if(wall->tile.pos.x == x && wall->tile.pos.y == y) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int findOpenDirection(std::vector<Entity *> level, int x, int y) {
     bool left = true;
     bool right = true;
     bool down = true;
     bool up = true;
-    if(!isRectFree(level, x + 1, y - 1, 3, 3)) {
+    if(!isRectFree(level, x + 1, y - 1, 3, 3) ||
+        !isTileFree(level, x - 1, y)) {
         right = false;
     }
-    if(!isRectFree(level, x - 1, y - 1, -3, 3)) {
+    if(!isRectFree(level, x - 1, y - 1, -3, 3) ||
+        !isTileFree(level, x + 1, y)) {
         left = false;
     }
-    if(!isRectFree(level, x - 1, y - 1, 3, -3)) {
+    if(!isRectFree(level, x - 1, y - 1, 3, -3) ||
+        !isTileFree(level, x, y + 1)) {
         up = false;
     }
-    if(!isRectFree(level, x - 1, y + 1, 3, 3)) {
+    if(!isRectFree(level, x - 1, y + 1, 3, 3) ||
+        !isTileFree(level, x, y - 1)) {
         down = false;
     }
     if(right) {
