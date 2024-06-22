@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include "helpers.hpp"
 #include "entities.hpp"
+#include <stdlib.h>
 
 class Wall : public Entity {
 public:
@@ -27,8 +28,16 @@ std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int r
     }
     return level;
 }
-std::vector<Entity *> levelGen() {
-    std::vector<Entity *> level;
+std::vector<Entity *> iterateLevel(std::vector<Entity *> level) {
+    int walls = level.size();
+    int doorWall = rand() % walls;
+    if (doorWall < walls) {
+        // check it's not a door
+        if(level[doorWall]->tile.sprite != 'O') { 
+            level[doorWall]->tile.sprite = 'O';
+        }
+    }
+
     return level;
 }
 std::vector<Entity *> createLevel(Point currentLevel) {
@@ -39,12 +48,15 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     //     }
     // }
     if(currentLevel == Point(0, 0)) { // starting level
-        level = addRectangle(level, 10, 5, 5, 5);
+        level = addRectangle(level, 0, 0, 5, 5);
         // for(int x = 0; x < COLS; x++) {
         //     for(int y = 0; y < LINES; y++) {
         //         level.push_back(new Wall(Tile(x, y, ' ')));
         //     }
         // }
+        for(int i = 0; i < 10; i++) {
+            iterateLevel(level);
+        }
     }
 
     return level;
