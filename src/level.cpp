@@ -18,6 +18,15 @@ public:
     }
 };
 std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int recty, int rectw, int recth) {
+    if(rectw < 0) {
+        rectx += rectw; 
+        rectw = abs(rectw);
+    }
+    if(recth < 0) {
+        recty -= recth; 
+        recth = abs(recth);
+    }
+
     for(int x = 0; x < COLS; x++) {
         for(int y = 0; y < LINES; y++) {
             if((x == rectx && y >= recty && y <= recty + recth) || // left bar
@@ -33,6 +42,16 @@ std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int r
     return level;
 }
 bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, int recth) {
+    if(rectw < 0) {
+        rectx += rectw; 
+        rectw = abs(rectw);
+    }
+    if(recth < 0) {
+        recty += recth; 
+        recty = abs(recth);
+    }
+
+
     for(Entity *wall : level){
         if((wall->tile.pos.x == rectx && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // left bar
             (wall->tile.pos.x == rectx + rectw && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // right bar
@@ -90,8 +109,20 @@ std::vector<Entity *> iterateLevel(std::vector<Entity *> level) {
         // try and make a room
         // start with the []=[] connection part, check what direction that is free
         // if there is one free, make a rectangle, and delete the overalpping square
-        if(findOpenDirection(level, level[doorWall]->tile.pos.x, level[doorWall]->tile.pos.y) == RIGHT) {
+        openDirection = findOpenDirection(level, level[doorWall]->tile.pos.x, level[doorWall]->tile.pos.y);
+        if(openDirection == RIGHT) {
             level = addRectangle(level, level[doorWall]->tile.pos.x, level[doorWall]->tile.pos.y - 1, 3, 3);
+            Point pointToErase = level[doorWall]->tile.pos;
+            level.erase(level.begin() + doorWall);
+            int i = 0;
+            for(Entity *wall : level){
+                if(wall->tile.pos.x == pointToErase.x && wall->tile.pos.y == pointToErase.y) {
+                    level.erase(level.begin() + i);
+                }
+                i++;
+            }
+        }else if(openDirection == LEFT) {
+            level = addRectangle(level, level[doorWall]->tile.pos.x, level[doorWall]->tile.pos.y - 1, -3, 3);
             Point pointToErase = level[doorWall]->tile.pos;
             level.erase(level.begin() + doorWall);
             int i = 0;
@@ -114,7 +145,7 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     //     }
     // }
     if(currentLevel == Point(0, 0)) { // starting level
-        level = addRectangle(level, 20, 0, 5, 5);
+        level = addRectangle(level, 20, 20, 5, 5);
         // for(int x = 0; x < COLS; x++) {
         //     for(int y = 0; y < LINES; y++) {
         //         level.push_back(new Wall(Tile(x, y, ' ')));
