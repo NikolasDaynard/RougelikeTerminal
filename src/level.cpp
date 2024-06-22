@@ -15,11 +15,10 @@ public:
 std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int recty, int rectw, int recth) {
     for(int x = 0; x < COLS; x++) {
         for(int y = 0; y < LINES; y++) {
-            if((x == rectx && y > recty - recth && y < recty) || // left bar
-                (x == rectx + rectw && y > recty - recth && y < recty) || // right bar
-                (y == recty && x > rectx - rectw && x < rectx) || // top bar
-                (y == recty + recth && x > rectx - rectw && x < rectx) // bottom bar
-            
+            if((x == rectx && y >= recty - recth && y <= recty) || // left bar
+                (x == rectx + rectw && y >= recty - recth && y <= recty) || // right bar
+                (y == recty && x >= rectx && x <= rectx + rectw) || // bottom bar
+                (y == recty - recth && x >= rectx && x <= rectx + rectw) // top bar
                 ) {
                 level.push_back(new Wall(Tile(x, y, '+')));
             }
