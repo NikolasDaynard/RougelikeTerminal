@@ -24,10 +24,11 @@ int main() {
     Timer playerMovementTimer = Timer();
     Timer inputTimer = Timer();
     Player *player = new Player(10, Tile(1, 1, '0'));
-    
-    // for(Entity *entity : createLevel()) {
-    //     entities.push_back(entity);
-    // }
+
+    Point currentLevel = Point(0, 0);
+    for(Entity *entity : createLevel(currentLevel)) {
+        entities.push_back(entity);
+    }
     // make sure player is ontop of the stack
     entities.push_back(player);
 
@@ -37,7 +38,7 @@ int main() {
             entity->render();
         }
         refresh();            // Print it on the real screen
-        
+
         inputTemp = getch();
         if(inputTemp != ERR) {  // only update input if it exists
             input = inputTemp;

@@ -4,6 +4,9 @@ class Point {
 public:
     Point(int x, int y) : x(x), y(y) {}
     int x, y;
+    bool operator == (Point const& obj) {
+        return obj.x == x && obj.y == y;
+    }
 };
 
 class Tile {
