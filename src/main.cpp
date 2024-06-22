@@ -17,7 +17,6 @@ int main() {
     start_color();
     cbreak();// Disable line buffering
     noecho(); // Prevent user input from being echoed to the screen
-    nodelay(stdscr, TRUE); // causes input to be non-blocking
     keypad(stdscr, TRUE); // Capture special keys like arrow keys
     int input = 0;
     int inputTemp;
@@ -26,6 +25,7 @@ int main() {
     std::vector<Entity *> entities;
     Timer playerMovementTimer = Timer();
     Timer inputTimer = Timer();
+    Timer gameMaxClock = Timer();
     Player *player = new Player(10, Tile(1, 1, '0'));
 
     Point currentLevel = Point(0, 0);
@@ -34,6 +34,7 @@ int main() {
     }
     // make sure player is ontop of the stack
     entities.push_back(player);
+    nodelay(stdscr, TRUE); // causes input to be non-blocking
 
     while (input != 'q' && input != 27) {
         clear();
@@ -87,6 +88,10 @@ int main() {
                 player->tile.pos = previousPlayerPosition;
             }
         }
+        while(gameMaxClock.readTimer() < 10) {
+            //wait 10 ms
+        }
+        gameMaxClock.resetTimer();
     }
     endwin();             // End curses mode
     delete player;
