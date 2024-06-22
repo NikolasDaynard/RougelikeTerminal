@@ -37,6 +37,13 @@ std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int r
 
                 level.push_back(new Wall(Tile(x, y, '+')));
             }
+            if(x >= rectx && x <= rectx + rectw && 
+                y >= recty && y <= recty + recth) {
+                    // make invis tile for gen
+                    Wall *newTile = new Wall(Tile(x, y, ' '));
+                    newTile->blocking = false;
+                    level.push_back(newTile);
+                }
         }
     }
     return level;
@@ -51,16 +58,16 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
         recth = abs(recth);
     }
 
-    if(rectx < 0 || rectx > COLS || recty < 0 || recty > LINES) {
+    if(rectx < 0 || rectx > COLS - 1 || recty < 0 || recty > LINES - 1) {
         return false;
     }
 
     for(Entity *wall : level){
-        if((wall->tile.pos.x == rectx && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // left bar
+        if(((wall->tile.pos.x == rectx && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // left bar
             (wall->tile.pos.x == rectx + rectw && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // right bar
             (wall->tile.pos.y == recty && wall->tile.pos.x >= rectx && wall->tile.pos.x <= rectx + rectw) || // bottom bar
             (wall->tile.pos.y == recty + recth && wall->tile.pos.x >= rectx && wall->tile.pos.x <= rectx + rectw) // top bar
-            ) {
+            ) && wall->tile.sprite == ' ') {
 
             return false;
         }
@@ -69,8 +76,11 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
 }
 
 bool isTileFree(std::vector<Entity *> level, int x, int y) {
+    if(x < 0 || x > COLS - 1 || y < 0 || y > LINES - 1) {
+        return false;
+    }
     for(Entity *wall : level){
-        if(wall->tile.pos.x == x && wall->tile.pos.y == y) {
+        if(wall->tile.pos.x == x && wall->tile.pos.y == y && wall->blocking) {
             return false;
         }
     }
@@ -160,7 +170,7 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     // }
     if(currentLevel == Point(0, 0)) { // starting level
         level = addRectangle(level, 0, 0, 5, 5);
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1100; i++) {
             level = iterateLevel(level);
         }
     }

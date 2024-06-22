@@ -16,8 +16,10 @@ public:
     Tile(Point pos, char sprite) : pos(pos), sprite(sprite) {}
     Tile(int x, int y, char sprite) : pos(Point(x, y)), sprite(sprite) {}
     void render() const {
-        mvaddch(pos.y, ((pos.x) * 2) + 1, sprite);
-        mvaddch(pos.y, pos.x * 2, sprite);
+        if(sprite != ' ') {
+            mvaddch(pos.y, ((pos.x) * 2) + 1, sprite);
+            mvaddch(pos.y, pos.x * 2, sprite);
+        }
     };
 };
 #endif
