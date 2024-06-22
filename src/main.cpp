@@ -3,8 +3,10 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <algorithm>
 #include "helpers.hpp"
 #include "entities.hpp"
+#include "swordWeapon.cpp"
 #include "player.cpp"
 #include "level.cpp"
 #include "time.cpp"
@@ -60,36 +62,54 @@ int main() {
                 case KEY_UP:
                 case 'w':
                     player->tile.pos.y -= 1;
+                    player->facing = UP;
                     playerMovementTimer.resetTimer();
                     break;
                 case KEY_DOWN:
                 case 's':
                     player->tile.pos.y += 1;
+                    player->facing = DOWN;
                     playerMovementTimer.resetTimer();
                     break;
                 case KEY_LEFT:
                 case 'a':
                     player->tile.pos.x -= 1;
+                    player->facing = LEFT;
                     playerMovementTimer.resetTimer();
                     break;
                 case KEY_RIGHT:
                 case 'd':
                     player->tile.pos.x += 1;
+                    player->facing = RIGHT;
                     playerMovementTimer.resetTimer();
+                    break;
+                case ' ': // sapce
+                    entities = player->attack(entities);
                     break;
                 default:
                     Tile(4, 4, input).render();
                     break;
             }
         }
-        // bounce if tile is occupied
+        // bounce if tile is occupied + update entities
         for(Entity *entity : entities) {
+            entities = entity->update(entities);
             if(entity->tile.pos.x == player->tile.pos.x && entity->tile.pos.y == player->tile.pos.y && entity->blocking) {
                 player->tile.pos = previousPlayerPosition;
             }
         }
-        while(gameMaxClock.readTimer() < 10) {
-            //wait 10 ms
+        entities.erase(
+            std::remove_if(entities.begin(), entities.end(), [](Entity *entity) {
+                if (entity->health <= 0) {
+                    delete entity;
+                    return true;
+                }
+                return false;
+            }),
+            entities.end()
+        );
+        while(gameMaxClock.readTimer() < 16) {
+            //wait 16.6 ms to reduce flicker
         }
         gameMaxClock.resetTimer();
     }

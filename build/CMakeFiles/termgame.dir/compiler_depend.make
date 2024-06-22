@@ -803,8 +803,11 @@ CMakeFiles/termgame.dir/src/main.cpp.o: /Users/nikolasdaynard/hackclub/1/src/mai
   /Users/nikolasdaynard/hackclub/1/src/helpers.hpp \
   /Users/nikolasdaynard/hackclub/1/src/level.cpp \
   /Users/nikolasdaynard/hackclub/1/src/player.cpp \
+  /Users/nikolasdaynard/hackclub/1/src/swordWeapon.cpp \
   /Users/nikolasdaynard/hackclub/1/src/time.cpp
 
+
+/Users/nikolasdaynard/hackclub/1/src/swordWeapon.cpp:
 
 /Users/nikolasdaynard/hackclub/1/src/player.cpp:
 

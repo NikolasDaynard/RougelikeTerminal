@@ -4,15 +4,11 @@
 #include "entities.hpp"
 #include <stdlib.h>
 
-enum direction {
-    LEFT, UP, DOWN, RIGHT, NONE
-};
-
 class Wall : public Entity {
 public:
     Wall(Tile tile) : Entity(1000000000, tile) {}
 
-    void render() const override {
+    void render() override {
         // change color here if needed
         tile.render();
     }
@@ -69,18 +65,6 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
             (wall->tile.pos.y == recty + recth && wall->tile.pos.x >= rectx && wall->tile.pos.x <= rectx + rectw) // top bar
             ) && wall->tile.sprite == ' ') {
 
-            return false;
-        }
-    }
-    return true;
-}
-
-bool isTileFree(std::vector<Entity *> level, int x, int y) {
-    if(x < 0 || x > COLS - 1 || y < 0 || y > LINES - 1) {
-        return false;
-    }
-    for(Entity *wall : level){
-        if(wall->tile.pos.x == x && wall->tile.pos.y == y && wall->blocking) {
             return false;
         }
     }
@@ -169,7 +153,11 @@ std::vector<Entity *> iterateLevel(std::vector<Entity *> level) {
                 level = addRectangle(level, level[doorWall]->tile.pos.x - 1, level[doorWall]->tile.pos.y, rectSize.x, rectSize.y);
             }
         }else if(openDirection == UP){
-            level = addRectangle(level, level[doorWall]->tile.pos.x - 1, level[doorWall]->tile.pos.y, rectSize.x, -rectSize.y);
+            if(rand() % 2 == 1 && findOpenDirection(level, level[doorWall]->tile.pos.x, level[doorWall]->tile.pos.y, -rectSize.x, rectSize.y) == UP) {
+                level = addRectangle(level, level[doorWall]->tile.pos.x + 1, level[doorWall]->tile.pos.y, -rectSize.x, -rectSize.y);
+            }else{
+                level = addRectangle(level, level[doorWall]->tile.pos.x - 1, level[doorWall]->tile.pos.y, rectSize.x, -rectSize.y);
+            }
         }
         if(openDirection != NONE) {
             pointToErase = level[doorWall]->tile.pos;
@@ -199,7 +187,7 @@ std::vector<Entity *> createLevel(Point currentLevel) {
         //     refresh();
         // getch();
         }
-        // add items on ' ' spaces, ie room tiles
+        // add spaces on ' ' spaces, ie room tiles
         for(Entity *wall : level){
             if(isTileFree(level, wall->tile.pos.x, wall->tile.pos.y) && wall->tile.sprite == ' ') {
                 Wall *newTile = new Wall(Tile(wall->tile.pos.x, wall->tile.pos.y, '.'));
@@ -207,6 +195,14 @@ std::vector<Entity *> createLevel(Point currentLevel) {
                 level.push_back(newTile);
             }
         }
+        //items
+        // for(Entity *wall : level){
+        //     if(isTileFree(level, wall->tile.pos.x, wall->tile.pos.y) && wall->tile.sprite == ' ') {
+        //         // Wall *newTile = new Item(Tile(wall->tile.pos.x, wall->tile.pos.y, '.'));
+        //         newTile->blocking = false;
+        //         level.push_back(newTile);
+        //     }
+        // }
     }
 
     return level;

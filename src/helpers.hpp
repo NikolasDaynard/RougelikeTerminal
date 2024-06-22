@@ -1,5 +1,10 @@
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
+
+enum direction {
+    LEFT, UP, DOWN, RIGHT, NONE
+};
+
 class Point {
 public:
     Point(int x, int y) : x(x), y(y) {}
