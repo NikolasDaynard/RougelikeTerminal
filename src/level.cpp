@@ -51,17 +51,64 @@ int findOpenDirection(std::vector<Entity *> level, int x, int y) {
     bool right = true;
     bool down = true;
     bool up = true;
+    if(!isRectFree(level, x + 1, y - 1, 3, 3)) {
+        right = false;
+    }
+    if(!isRectFree(level, x - 1, y - 1, -3, 3)) {
+        left = false;
+    }
+    if(!isRectFree(level, x - 1, y - 1, 3, -3)) {
+        up = false;
+    }
+    if(!isRectFree(level, x - 1, y + 1, 3, 3)) {
+        down = false;
+    }
+    if(right) {
+        return RIGHT;
+    }else if(left) {
+        return LEFT;
+    }else if(up) {
+        return UP;
+    }else if(down) {
+        return DOWN;
+    }else{
+        return NONE;
+    }
+}
+int findOpenDirection(std::vector<Entity *> level, int x, int y) {
+    bool left = true;
+    bool right = true;
+    bool down = true;
+    bool up = true;
     for(Entity *wall : level){
         // handles right
-        if((x + 1 == wall->tile.pos.x && y + 1 == wall->tile.pos.y) ||
-            (x + 1 == wall->tile.pos.x && y - 1 == wall->tile.pos.y) ||
-            x + 1 == wall->tile.pos.x && y == wall->tile.pos.y) {
+        // if((x + 1 == wall->tile.pos.x && y + 1 == wall->tile.pos.y) ||
+        //     (x + 1 == wall->tile.pos.x && y - 1 == wall->tile.pos.y) ||
+        //     x + 1 == wall->tile.pos.x && y == wall->tile.pos.y) {
+        //     right = false;
+        // }
+        if(!isRectFree(level, x + 1, y - 1, 3, 3)) {
             right = false;
+        }
+        if(!isRectFree(level, x - 1, y - 1, -3, -3)) {
+            left = false;
+        }
+        if(!isRectFree(level, x - 1, y - 1, 3, -3)) {
+            up = false;
+        }
+        if(!isRectFree(level, x - 1, y + 1, 3, 3)) {
+            down = false;
         }
     }
     if(right) {
         return RIGHT;
-    }else {
+    }else if(left) {
+        return LEFT;
+    }else if(up) {
+        return UP;
+    }else if(down) {
+        return DOWN;
+    }else{
         return NONE;
     }
 }
@@ -104,13 +151,13 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     //     }
     // }
     if(currentLevel == Point(0, 0)) { // starting level
-        level = addRectangle(level, 0, 0, 5, 5);
+        level = addRectangle(level, 20, 0, 5, 5);
         // for(int x = 0; x < COLS; x++) {
         //     for(int y = 0; y < LINES; y++) {
         //         level.push_back(new Wall(Tile(x, y, ' ')));
         //     }
         // }
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 10; i++) {
             level = iterateLevel(level);
         }
     }
