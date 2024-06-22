@@ -21,6 +21,7 @@ int main() {
     keypad(stdscr, TRUE); // Capture special keys like arrow keys
     int input = 0;
     int inputTemp;
+    Point previousPlayerPosition = Point(100, 100);
     
     std::vector<Entity *> entities;
     Timer playerMovementTimer = Timer();
@@ -52,7 +53,7 @@ int main() {
                 inputTimer.resetTimer();
             }
         }
-
+        previousPlayerPosition = player->tile.pos;
         if(playerMovementTimer.readTimer() > 100) {
             switch (input) {
                 case KEY_UP:
@@ -78,6 +79,12 @@ int main() {
                 default:
                     Tile(4, 4, input).render();
                     break;
+            }
+        }
+        // bounce if tile is occupied
+        for(Entity *entity : entities) {
+            if(entity->tile.pos.x == player->tile.pos.x && entity->tile.pos.y == player->tile.pos.y && entity->blocking) {
+                player->tile.pos = previousPlayerPosition;
             }
         }
     }

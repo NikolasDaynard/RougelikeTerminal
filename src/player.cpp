@@ -3,7 +3,9 @@
 
 class Player : public Entity {
 public:
-    Player(int health, Tile tile) : Entity(health, tile) {}
+    Player(int health, Tile tile) : Entity(health, tile) {
+        blocking = false;
+    }
 
     void render() const override {
         // change color here if needed
