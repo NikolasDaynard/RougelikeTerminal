@@ -28,17 +28,20 @@ std::vector<Entity *> addRectangle(std::vector<Entity *> level, int rectx, int r
     }
     return level;
 }
-std::vector<Entity *> iterateLevel(std::vector<Entity *> level) {
+std::vector<Entity*> iterateLevel(std::vector<Entity *> level) {
     int walls = level.size();
-    int doorWall = rand() % walls;
-    if (doorWall < walls) {
-        // check it's not a door
-        if(level[doorWall]->tile.sprite != 'O') { 
-            level[doorWall]->tile.sprite = 'O';
-        }
+    if (walls == 0) {
+        return level; // Return unchanged if level is empty
     }
 
-    return level;
+    int doorWall = rand() % walls;
+
+    // Check if the randomly chosen entity is not a door ('O') and erase it if not
+    if (level[doorWall]->tile.sprite != 'O') {
+        level.erase(level.begin() + doorWall);
+    }
+
+    return level; // Return modified or unchanged level vector
 }
 std::vector<Entity *> createLevel(Point currentLevel) {
     std::vector<Entity *> level;
@@ -55,7 +58,7 @@ std::vector<Entity *> createLevel(Point currentLevel) {
         //     }
         // }
         for(int i = 0; i < 10; i++) {
-            iterateLevel(level);
+            level = iterateLevel(level);
         }
     }
 
