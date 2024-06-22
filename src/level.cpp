@@ -51,6 +51,10 @@ bool isRectFree(std::vector<Entity *> level, int rectx, int recty, int rectw, in
         recth = abs(recth);
     }
 
+    if(rectx < 0 || rectx > COLS || recty < 0 || recty > LINES) {
+        return false;
+    }
+
 
     for(Entity *wall : level){
         if((wall->tile.pos.x == rectx && wall->tile.pos.y >= recty && wall->tile.pos.y <= recty + recth) || // left bar
@@ -143,7 +147,7 @@ std::vector<Entity *> createLevel(Point currentLevel) {
     //     }
     // }
     if(currentLevel == Point(0, 0)) { // starting level
-        level = addRectangle(level, 20, 20, 5, 5);
+        level = addRectangle(level, 0, 0, 5, 5);
         for(int i = 0; i < 10; i++) {
             level = iterateLevel(level);
         }
