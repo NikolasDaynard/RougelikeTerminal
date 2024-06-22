@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#define COLS COLS / 2
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -7,6 +8,7 @@
 #include "player.cpp"
 #include "level.cpp"
 #include "time.cpp"
+
 
 int main() {
     srand(time(NULL));
